@@ -4,5 +4,4 @@ require "termin_de/loop"
 require "termin_de/termin"
 require "termin_de/calendar"
 
-module TerminDe
-end
+module TerminDe; end
