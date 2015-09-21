@@ -22,10 +22,10 @@ Or install it yourself as:
 
 ```
 termin_de [options]
-    -b, --before=<date>              Trigger only on date earlier than given date
-    -c, --execute=<command>          Run given command with %{date} and %{link} replacements
-        --dry-run                    Run on saved samples
-        --version                    Display the version
+    -b, --before=<date>            Trigger only on date earlier than given date
+    -c, --execute=<command>        Run given command with %{date} and %{link} replacements
+        --dry-run                  Run on saved samples
+        --version                  Display the version
 ```
 
 Basically you can sit down, relax, brew some :coffee: and watch at output.
