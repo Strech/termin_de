@@ -22,7 +22,7 @@ module TerminDe
           termin = calendar.earlier_termin
           @logger.info "Found new [#{termin.date}] → #{termin.link}"
 
-          %x{#{@options.command % termin.to_h}} if @options.has_command?
+          %x{#{@options.command % termin.to_h}} if @options.command_given?
         else
           @logger.info "Nothing ..."
         end

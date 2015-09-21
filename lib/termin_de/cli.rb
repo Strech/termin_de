@@ -18,7 +18,7 @@ module TerminDe
     private
 
     Options = Struct.new(:before_date, :dry_run, :command) do
-      def has_command?
+      def command_given?
         !!command
       end
 
