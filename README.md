@@ -42,7 +42,7 @@ Or you can define your own complex handler and maybe logfile.
 Available variables are `%{date}` and `%{link}`.
 
     $ export EMAIL_TEMPLATE="From: termin@monitor\nTo: your@gmail.com\nContent-Type: text/html\n\n\n<html><body><a href=\"%{link}\">%{date}</a></body></html>"
-    $ termin --before 23-10-2015 -c "echo '$EMAIL_TEMPLATE' | sendmail your@gmail.com > logs/output.log
+    $ termin --before 23-10-2015 -c "echo '$EMAIL_TEMPLATE' | sendmail your@gmail.com" > logs/output.log
 
 Use `--dry-run` option for local sandbox. Sample has 2 available dates `2015-11-09` and `2015-11-05`.
 
