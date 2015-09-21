@@ -1,6 +1,6 @@
 # TerminDe
 
-Simple Termin monitoring :eyeglasses:
+Simple Termin cancelation monitoring :eyeglasses:
 
 ## Installation
 
@@ -28,6 +28,8 @@ termin_de [options]
         --version                  Display the version
 ```
 
+## Examples
+
 Basically you can sit down, relax, brew some :coffee: and watch at output.
 
     $ termin --before 2015-11-20
@@ -53,7 +55,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/Strech/termin_de.
-
 
 ## License
 
