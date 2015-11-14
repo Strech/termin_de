@@ -1,4 +1,5 @@
 require "optparse"
+require "date"
 
 module TerminDe
   class Cli
