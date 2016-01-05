@@ -35,6 +35,7 @@ module TerminDe
 
     def infinitly
       loop do
+        @logger.info "Looking for available slots before #{@options.before_date}"
         begin
           yield
         rescue Exception => e
