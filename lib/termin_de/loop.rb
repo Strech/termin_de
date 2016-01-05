@@ -2,7 +2,7 @@ require "logger"
 
 module TerminDe
   class Loop
-    # NOTE : We don't whant to be limited by service protection
+    # NOTE : We don't want to be limited by service protection
     REQUEST_INTERVAL_IN_SECONDS = 120
 
     def initialize(options)
