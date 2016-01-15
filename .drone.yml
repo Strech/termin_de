@@ -1,0 +1,4 @@
+---
+image: ubuntu
+script:
+  - bundle exec rspec
