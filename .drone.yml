@@ -2,6 +2,8 @@
 image: strech/ruby-2.3.0-slim
 script:
   - source ~/.bashrc
+  - whoami
+  - echo $PATH
   - rbenv global 2.3.0
   - ruby -v
   - gem install bundler
