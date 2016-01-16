@@ -1,5 +1,8 @@
 ---
 image: strech/ruby-2.3.0-dev
 script:
+  - rbenv versions
+  - ruby version
+  - gem install bundler
   - bundle install --jobs=2
   - bundle exec rspec
