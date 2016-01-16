@@ -1,4 +1,5 @@
 ---
-image: ubuntu
+image: ruby:2.3.0-slim
 script:
+  - bundle install --jobs=2
   - bundle exec rspec
