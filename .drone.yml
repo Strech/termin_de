@@ -1,5 +1,6 @@
 ---
 image: strech/ruby-2.3.0-slim
 script:
+  - gem install bundler
   - bundle install --jobs=2
   - bundle exec rspec
