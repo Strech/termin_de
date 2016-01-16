@@ -1,6 +1,9 @@
 ---
 image: strech/ruby-2.3.0-slim
 script:
+  - source ~/.bashrc
+  - rbenv global 2.3.0
+  - ruby -v
   - gem install bundler
   - bundle install --jobs=2
   - bundle exec rspec
