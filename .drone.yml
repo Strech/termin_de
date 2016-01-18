@@ -3,4 +3,4 @@ image: strech/ruby-dev
 script:
   - ruby -v
   - bundle install --jobs=2
-  - bundle exec rspec
+  - bundle exec rspec spec/termin_de/calendar_spec.rb:22
