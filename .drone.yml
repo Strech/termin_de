@@ -1,5 +1,5 @@
 ---
-image: strech/ruby-2.3.0-slim
+image: strech/ruby-dev
 script:
   - source ~/.bashrc
   - whoami
