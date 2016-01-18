@@ -1,11 +1,6 @@
 ---
 image: strech/ruby-dev
 script:
-  - source ~/.bashrc
-  - whoami
-  - echo $PATH
-  - rbenv global 2.3.0
   - ruby -v
-  - gem install bundler
   - bundle install --jobs=2
   - bundle exec rspec
