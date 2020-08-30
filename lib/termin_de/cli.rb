@@ -1,9 +1,12 @@
-require "optparse"
-require "date"
+# frozen_string_literal: true
+
+require 'optparse'
+require 'date'
 
 module TerminDe
+  # command line interface
   class Cli
-    DEFAULT_DATE = Date.new(3000, 01, 01)
+    DEFAULT_DATE = Date.new(3000, 0o1, 0o1)
     DEFAULT_DRY_RUN = false
 
     def initialize(argv)
@@ -31,15 +34,19 @@ module TerminDe
         parser.banner = "Burgeramt termin monitor\nUsage: termin [options]"
         parser.version = VERSION
 
-        parser.on("-b", "--before=<date>", String, "Trigger only on date earlier than given date") do |date|
-          @options.before_date = Date.parse(date) rescue DEFAULT_DATE
+        parser.on('-b', '--before=<date>', String, 'Trigger only on date earlier than given date') do |date|
+          @options.before_date = begin
+                                   Date.parse(date)
+                                 rescue StandardError
+                                   DEFAULT_DATE
+                                 end
         end
 
-        parser.on("-c", "--execute=<command>", String, "Run given command with %{date} and %{link} replacements") do |command|
+        parser.on('-c', '--execute=<command>', String, 'Run given command with %{date} and %{link} replacements') do |command|
           @options.command = command
         end
 
-        parser.on("--dry-run", "Run on saved examples") do
+        parser.on('--dry-run', 'Run on saved examples') do
           @options.dry_run = true
         end
 

@@ -1,10 +1,13 @@
-require "curb"
-require "nokogiri"
+# frozen_string_literal: true
+
+require 'curb'
+require 'nokogiri'
 
 module TerminDe
+  # burgeramt calendar entity
   class Calendar
-    SAMPLES_PATH = File.expand_path("../../../samples/calendar.html", __FILE__)
-    TERMIN_CSS_PATH = "td.buchbar a".freeze
+    SAMPLES_PATH = File.expand_path('../../samples/calendar.html', __dir__)
+    TERMIN_CSS_PATH = 'td.buchbar a'
 
     attr_reader :booked_termin
 
@@ -13,7 +16,7 @@ module TerminDe
       @booked_termin = Termin.new(options.before_date)
     end
 
-    def has_earlier?
+    def earlier?
       !earlier_termin.link.nil? && earlier_termin.date != booked_termin.date
     end
 
@@ -31,8 +34,11 @@ module TerminDe
     end
 
     def download_latest_calendar
-      @options.dry_run? ? Nokogiri.parse(File.read SAMPLES_PATH) :
-                          Nokogiri.parse(Curl::Easy.perform(Termin::QUERY_URL).body_str)
+      if @options.dry_run?
+        Nokogiri.parse(File.read(SAMPLES_PATH))
+      else
+        Nokogiri.parse(Curl::Easy.perform(Termin::QUERY_URL).body_str)
+      end
     end
   end
 end
