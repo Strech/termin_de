@@ -6,7 +6,7 @@ module TerminDe
   # Endless loop for querying the burgeramt webpage
   class Loop
     # NOTE : We don't want to be limited by service protection
-    REQUEST_INTERVAL_IN_SECONDS = 120
+    REQUEST_INTERVAL_IN_SECONDS = 60
 
     def initialize(options)
       @options = options
@@ -22,7 +22,7 @@ module TerminDe
         calendar = Calendar.new(@options)
 
         if calendar.earlier?
-          found(calendar)
+          termin_found(calendar.earlier_termin)
         else
           @logger.info 'Nothing ...'
         end
@@ -41,7 +41,7 @@ module TerminDe
         rescue Exception => e
           # NOTE : Arrrgh, Curb doesn't nest exceptions
           raise unless e.class.name =~ /Curl/
-
+          
           @fails += 1
           pause_when(@fails)
         end
@@ -54,8 +54,7 @@ module TerminDe
       sleep(num)
     end
 
-    def termin_found(calendar)
-      termin = calendar.earlier_termin
+    def termin_found(termin)
       @logger.info "Found new [#{termin.date}] → #{termin.link}"
       `#{@options.command % termin.to_h}` if @options.command_given?
     end

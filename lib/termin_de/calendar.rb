@@ -2,6 +2,7 @@
 
 require 'curb'
 require 'nokogiri'
+require 'time'
 
 module TerminDe
   # burgeramt calendar entity
@@ -13,7 +14,7 @@ module TerminDe
 
     def initialize(options)
       @options = options
-      @booked_termin = Termin.new(options.before_date)
+      @booked_termin = Termin.new(date: options.before_date)
     end
 
     def earlier?
@@ -25,20 +26,28 @@ module TerminDe
     end
 
     def available_termins
-      download_latest_calendar.css(TERMIN_CSS_PATH).map do |link|
-        date = Date.parse link.attr(:href).match(/\d{4}-\d{2}-\d{2}/)[0]
-        link = "#{Termin::URL}/#{link.attr(:href).sub(Termin::BURGERAMT_IDS, '')}"
-
-        Termin.new(date, link)
+      bookable_termins = download_latest_calendar.css(TERMIN_CSS_PATH)
+      bookable_termins.map do |link|
+        time = Time.at(link.attr(:href).match(/\d+/)[0].to_i)
+        Termin.new(date: Date.parse(time.to_s), link: Termin::QUERY_URL)
       end
     end
 
+    # Downloading the termin calendar
+    #
+    # it is important to enable cookies, because the identification of
+    # a user request is handled by the cookie "Zmsappointment"
+    # also a redirect is performed, because the first request does not
+    # contain the cookie
     def download_latest_calendar
-      if @options.dry_run?
-        Nokogiri.parse(File.read(SAMPLES_PATH))
-      else
-        Nokogiri.parse(Curl::Easy.perform(Termin::QUERY_URL).body_str)
-      end
+      return Nokogiri.parse(File.read(SAMPLES_PATH)) if @options.dry_run?
+
+      curl = Curl::Easy.new
+      curl.enable_cookies = true
+      curl.follow_location = true
+      curl.url = Termin::QUERY_URL
+      curl.http_get
+      Nokogiri.parse(curl.body_str)
     end
   end
 end

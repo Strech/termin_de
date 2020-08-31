@@ -1,29 +1,32 @@
 # frozen_string_literal: true
 
+# Anliegen 120703 = ID card
 module TerminDe
-  class Termin < Struct.new(:date, :link)
+  # simple termin object to hold date and the link
+  class Termin
+    
     URL = 'https://service.berlin.de/terminvereinbarung/termin'
+    ANLIEGEN = '120703'
     BURGERAMT_IDS = [
-      '&dienstleister%5B%5D=122210&dienstleister%5B%5D=122217&dienstleister%5B%5D=122219',
-      '&dienstleister%5B%5D=122227&dienstleister%5B%5D=122231&dienstleister%5B%5D=122238',
-      '&dienstleister%5B%5D=122243&dienstleister%5B%5D=122252&dienstleister%5B%5D=122260',
-      '&dienstleister%5B%5D=122262&dienstleister%5B%5D=122254&dienstleister%5B%5D=122271',
-      '&dienstleister%5B%5D=122273&dienstleister%5B%5D=122277&dienstleister%5B%5D=122280',
-      '&dienstleister%5B%5D=122282&dienstleister%5B%5D=122284&dienstleister%5B%5D=122291',
-      '&dienstleister%5B%5D=122285&dienstleister%5B%5D=122286&dienstleister%5B%5D=122296',
-      '&dienstleister%5B%5D=150230&dienstleister%5B%5D=122301&dienstleister%5B%5D=122297',
-      '&dienstleister%5B%5D=122294&dienstleister%5B%5D=122312&dienstleister%5B%5D=122314',
-      '&dienstleister%5B%5D=122304&dienstleister%5B%5D=122311&dienstleister%5B%5D=122309',
-      '&dienstleister%5B%5D=317869&dienstleister%5B%5D=324433&dienstleister%5B%5D=325341',
-      '&dienstleister%5B%5D=324434&dienstleister%5B%5D=324435&dienstleister%5B%5D=122281',
-      '&dienstleister%5B%5D=324414&dienstleister%5B%5D=122283&dienstleister%5B%5D=122279',
-      '&dienstleister%5B%5D=122276&dienstleister%5B%5D=122274&dienstleister%5B%5D=122267',
-      '&dienstleister%5B%5D=122246&dienstleister%5B%5D=122251&dienstleister%5B%5D=122257',
-      '&dienstleister%5B%5D=122208&dienstleister%5B%5D=122226'
-    ].join
+      # ALL '122210,122217,327316,122219,327312,122227,122231,327346,122238,122243,327348,122252,329742,122260,329745,122262,329748,122254,329751,122271,327278,122273,122277,327276,122280,327294,122282,327290,122284,327292,122291,327270,122285,327266,122286,327264,122296,327268,327262,325657,150230,329760,122301,327282,122297,327286,122294,327284,122312,329763,122304,327330,122311,327334,122309,327332,317869,324434,122281,327352,122279,122276,327324,122274,327326,122267,329766,122246,327318,122251,327320,327653,122257,327322,122208,122226'
+      122_243, # Friedrichshain Frankfurter
+      122_238, # Friedrichshain Schlesisches Tor
+      122_260, # Lichtenberg Möllendorfstr
+      122_262, # Lichtenberg TierparkCenter
+    ]
     QUERY_URL = [
       'https://service.berlin.de/terminvereinbarung/termin/tag.php?termin=1',
-      BURGERAMT_IDS, '&anliegen%5B%5D=120686&herkunft=%2Fterminvereinbarung%2F'
-    ].join
+      'dienstleisterlist=' + BURGERAMT_IDS.join(','),
+      'anliegen[]=' + ANLIEGEN,
+      'herkunft=http%3A%2F%2Fservice.berlin.de%2Fdienstleistung%2F' + ANLIEGEN + '%2F'
+    ].join('&')
+
+    attr_reader :date
+    attr_reader :link
+
+    def initialize(date:, link: '')
+      @date = date
+      @link = link
+    end
   end
 end
