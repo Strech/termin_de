@@ -23,7 +23,7 @@ module TerminDe
 
     Options = Struct.new(:before_date, :dry_run, :command) do
       def command_given?
-        !!command
+        !command.nil?
       end
 
       alias_method :dry_run?, :dry_run
