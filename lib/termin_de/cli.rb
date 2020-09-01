@@ -8,10 +8,12 @@ module TerminDe
   class Cli
     DEFAULT_DATE = Date.new(3000, 0o1, 0o1)
     DEFAULT_DRY_RUN = false
+    # default request for id card
+    DEFAULT_SERVICE = '120703'
 
     def initialize(argv)
       @argv = argv
-      @options = Options.new(DEFAULT_DATE, DEFAULT_DRY_RUN)
+      @options = Options.new(DEFAULT_DATE, DEFAULT_DRY_RUN, DEFAULT_SERVICE)
     end
 
     def start
@@ -21,7 +23,7 @@ module TerminDe
 
     private
 
-    Options = Struct.new(:before_date, :dry_run, :command) do
+    Options = Struct.new(:before_date, :dry_run, :service, :command) do
       def command_given?
         !command.nil?
       end
@@ -44,6 +46,10 @@ module TerminDe
 
         parser.on('-c', '--execute=<command>', String, 'Run given command with %{date} and %{link} replacements') do |command|
           @options.command = command
+        end
+
+        parser.on('-s', '--service=<id>', String, 'Id of the requested service') do |id|
+          @options.service = !id.nil? ? id : DEFAULT_SERVICE
         end
 
         parser.on('--dry-run', 'Run on saved examples') do
