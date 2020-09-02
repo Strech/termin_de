@@ -1,14 +1,19 @@
-require "optparse"
-require "date"
+# frozen_string_literal: true
+
+require 'optparse'
+require 'date'
 
 module TerminDe
+  # command line interface
   class Cli
-    DEFAULT_DATE = Date.new(3000, 01, 01)
+    DEFAULT_DATE = Date.new(3000, 0o1, 0o1)
     DEFAULT_DRY_RUN = false
+    # default request for id card
+    DEFAULT_SERVICE = '120703'
 
     def initialize(argv)
       @argv = argv
-      @options = Options.new(DEFAULT_DATE, DEFAULT_DRY_RUN)
+      @options = Options.new(DEFAULT_DATE, DEFAULT_DRY_RUN, DEFAULT_SERVICE)
     end
 
     def start
@@ -18,9 +23,9 @@ module TerminDe
 
     private
 
-    Options = Struct.new(:before_date, :dry_run, :command) do
+    Options = Struct.new(:before_date, :dry_run, :service, :command) do
       def command_given?
-        !!command
+        !command.nil?
       end
 
       alias_method :dry_run?, :dry_run
@@ -31,15 +36,23 @@ module TerminDe
         parser.banner = "Burgeramt termin monitor\nUsage: termin [options]"
         parser.version = VERSION
 
-        parser.on("-b", "--before=<date>", String, "Trigger only on date earlier than given date") do |date|
-          @options.before_date = Date.parse(date) rescue DEFAULT_DATE
+        parser.on('-b', '--before=<date>', String, 'Trigger only on date earlier than given date') do |date|
+          @options.before_date = begin
+                                   Date.parse(date)
+                                 rescue StandardError
+                                   DEFAULT_DATE
+                                 end
         end
 
-        parser.on("-c", "--execute=<command>", String, "Run given command with %{date} and %{link} replacements") do |command|
+        parser.on('-c', '--execute=<command>', String, 'Run given command with %{date} and %{link} replacements') do |command|
           @options.command = command
         end
 
-        parser.on("--dry-run", "Run on saved examples") do
+        parser.on('-s', '--service=<id>', String, 'Id of the requested service') do |id|
+          @options.service = !id.nil? ? id : DEFAULT_SERVICE
+        end
+
+        parser.on('--dry-run', 'Run on saved examples') do
           @options.dry_run = true
         end
 
