@@ -18,7 +18,7 @@ module TerminDe
     TERMIN_CSS_PATH = 'td.buchbar a'
     URL = 'https://service.berlin.de/terminvereinbarung/termin'
 
-    attr_reader :booked_termin
+    attr_reader :booked_termin, :options
 
     def initialize(options)
       @options = options
@@ -51,10 +51,14 @@ module TerminDe
     def url
       [
         URL + '/tag.php?termin=1',
-        'dienstleisterlist=' + BURGERAMT_IDS.join(','),
+        'dienstleisterlist=' + burgeramt_ids,
         'anliegen[]=' + @booked_termin.service,
         'herkunft=http%3A%2F%2Fservice.berlin.de%2Fdienstleistung%2F' + @booked_termin.service + '%2F'
       ].join('&')
+    end
+
+    def burgeramt_ids
+      [options.burgeramt].join(',')
     end
 
     # Downloading the termin calendar
