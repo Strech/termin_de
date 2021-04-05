@@ -25,6 +25,7 @@ Usage: termin [options]
     -b, --before=<date>              Trigger only on date earlier than given date
     -c, --execute=<command>          Run given command with %{date} and %{link} replacements
     -s, --service=<id>               Id of the requested service
+    -u, --burgeramt=<id>             Id of the burgeramt
         --dry-run                    Run on saved examples
         --version                    Display the version
 ```
