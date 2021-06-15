@@ -14,7 +14,7 @@ module TerminDe
     end
 
     def to_h
-      {:link => @link,:date => @date}
+      {link: @link, date: @date}
     end
   end
 end
