@@ -12,5 +12,9 @@ module TerminDe
       @link = link
       @service = service
     end
+
+    def to_h
+      {link: @link, date: @date}
+    end
   end
 end
