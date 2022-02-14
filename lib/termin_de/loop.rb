@@ -37,7 +37,7 @@ module TerminDe
 
     def infinitly
       loop do
-        @logger.info "Looking for available slots before #{@options.before_date}"
+        @logger.info "Looking for available slots for service #{@options.service}, in #{@options.burgeramt == Cli::BURGERAMT_IDS ? 'all buergeramts' : "buergeramt #{@options.burgeramt}"} before #{@options.before_date}"
         begin
           yield
         rescue Exception => e
