@@ -21,14 +21,21 @@ Or install it yourself as:
 ## Usage
 
 ```
-Usage: termin [options]
+Burgeramt termin monitor. Version 0.1.0
+Usage: termin_de [options]
     -b, --before=<date>              Trigger only on date earlier than given date
     -c, --execute=<command>          Run given command with %{date} and %{link} replacements
     -s, --service=<id>               Id of the requested service
-    -u, --burgeramt=<id>             Id of the burgeramt
+    -u, --burgeramt=<bid>            Id of the burgeramt(s) (comma separated)
+    -i, --interval=<sec>             How long to wait between requests in seconds
         --dry-run                    Run on saved examples
+        --verbose                    Print more information during run
         --version                    Display the version
 ```
+
+By default `termin_de` will look for an appointment to get a Personalausweis (service=) in all Bürgerämtern.
+
+To perform a different or more specific search, you need to look-up the service id of the service you want (see [https://service.berlin.de/dienstleistungen/]) and pass a list of Bürgerämtern which you want to search (see [https://service.berlin.de/standorte/buergeraemter/] for the Bürgerämter, or the complete list at [https://service.berlin.de/standorte/]).
 
 ## Examples
 
