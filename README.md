@@ -4,24 +4,15 @@ Simple Termin cancelation monitoring for the Berliner offices :eyeglasses:
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install it directly from github:
 
-```ruby
-gem 'termin_de'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install termin_de
+    $ gem install specific_install
+    $ gem specific_install -l https://github.com/Strech/termin_de.git
 
 ## Usage
 
 ```
-Usage: termin [options]
+Usage: termin_de [options]
     -b, --before=<date>              Trigger only on date earlier than given date
     -c, --execute=<command>          Run given command with %{date} and %{link} replacements
     -s, --service=<id>               Id of the requested service
