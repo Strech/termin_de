@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'logger'
+require 'yaml'
 
 module TerminDe
   # Endless loop for querying the burgeramt webpage
@@ -13,6 +14,8 @@ module TerminDe
       @logger = Logger.new(STDOUT)
       @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
       @logger.level = options.verbose ? Logger::DEBUG : Logger::INFO
+
+      @logger.debug "Starting with options:\n#{options.to_h.to_yaml}"
 
     end
 
