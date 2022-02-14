@@ -58,6 +58,7 @@ module TerminDe
 
     def termin_found(termin)
       @logger.info "Found new [#{termin.date}] → #{termin.link}"
+      print "\a"
       `#{@options.command % termin.to_h}` if @options.command_given?
     end
   end
