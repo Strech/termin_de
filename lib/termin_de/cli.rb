@@ -69,7 +69,7 @@ module TerminDe
         end
 
         parser.on_tail('--version', 'Display the version') do
-          puts "Burgeramt termin monitor. Version #{parser.version}"
+          puts parser.version
           exit
         end
       end
