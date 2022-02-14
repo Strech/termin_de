@@ -67,7 +67,7 @@ module TerminDe
           @options.service = !id.nil? ? id : DEFAULT_SERVICE
         end
 
-        parser.on('-u', '--burgeramt=<bid>', String, 'Id of the burgeramt') do |id|
+        parser.on('-u', '--burgeramt=<bid>', String, 'Id of the burgeramt(s) (comma separated)') do |id|
           @options.burgeramt = id.nil? ? BURGERAMT_IDS : id
         end
 
