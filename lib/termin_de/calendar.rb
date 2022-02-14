@@ -73,6 +73,8 @@ module TerminDe
       curl = Curl::Easy.new
       curl.enable_cookies = true
       curl.follow_location = true
+
+      TerminDe.logger.debug "Starting HTTP GET to url: #{url}"
       curl.url = url
       curl.http_get
       Nokogiri.parse(curl.body_str)
