@@ -6,7 +6,7 @@ require 'date'
 module TerminDe
   # command line interface
   class Cli
-    DEFAULT_DATE = Date.new(3000, 0o1, 0o1)
+    DEFAULT_DATE = Date.new(Date.today.year, Date.today.month + 2, 1)
     DEFAULT_DRY_RUN = false
     # default request for id card
     DEFAULT_SERVICE = '120703'

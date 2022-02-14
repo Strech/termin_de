@@ -26,6 +26,8 @@ Usage: termin_de [options]
 
 By default `termin_de` will look for an appointment to get a Personalausweis (service=) in all Bürgerämtern.
 
+By default `termin_de` will find appointments for the current and next month (and not any further). If you are looking only appointments before an even shorter date then use `-b` and give the date in the format `YYYY-mm-dd`.
+
 To perform a different or more specific search, you need to look-up the service id of the service you want (see [https://service.berlin.de/dienstleistungen/]) and pass a list of Bürgerämtern which you want to search (see [https://service.berlin.de/standorte/buergeraemter/] for the Bürgerämter, or the complete list at [https://service.berlin.de/standorte/]).
 
 As an example of the `-c` switch, if you are running WSL under Windows you can a browser open automatically by using `-c "wslview '%{link}'"`.
