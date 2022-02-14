@@ -41,7 +41,7 @@ module TerminDe
 
     def opt_parser
       OptionParser.new do |parser|
-        parser.banner = "Burgeramt termin monitor\nUsage: termin [options]"
+        parser.banner = "Burgeramt termin monitor. Version #{parser.version}\nUsage: termin_de [options]"
         parser.version = VERSION
 
         parser.on('-b', '--before=<date>', String, 'Trigger only on date earlier than given date') do |date|
