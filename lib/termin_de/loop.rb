@@ -40,7 +40,7 @@ module TerminDe
         rescue Exception => e
           # NOTE : Arrrgh, Curb doesn't nest exceptions
           raise unless e.class.name =~ /Curl/
-          
+
           @fails += 1
           pause_when(@fails)
         end
