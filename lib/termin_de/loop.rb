@@ -5,8 +5,6 @@ require 'logger'
 module TerminDe
   # Endless loop for querying the burgeramt webpage
   class Loop
-    # NOTE : We don't want to be limited by service protection
-    REQUEST_INTERVAL_IN_SECONDS = 60
 
     def initialize(options)
       @options = options
@@ -14,7 +12,8 @@ module TerminDe
 
       @logger = Logger.new(STDOUT)
       @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
-      @logger.level = Logger::INFO
+      @logger.level = options.verbose ? Logger::DEBUG : Logger::INFO
+
     end
 
     def run
@@ -27,7 +26,7 @@ module TerminDe
           @logger.info 'Nothing ...'
         end
 
-        sleep(REQUEST_INTERVAL_IN_SECONDS)
+        sleep(@options.request_interval_in_seconds)
       end
     end
 
@@ -49,7 +48,7 @@ module TerminDe
     end
 
     def pause_when(fails)
-      num = (Math.log10(fails) * REQUEST_INTERVAL_IN_SECONDS / 2 + REQUEST_INTERVAL_IN_SECONDS).to_i
+      num = (Math.log10(fails) * @options.request_interval_in_seconds / 2 + @options.request_interval_in_seconds).to_i
       @logger.warn "Woooops, slow down ... pause for #{num} seconds"
       sleep(num)
     end
