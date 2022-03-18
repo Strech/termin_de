@@ -22,6 +22,7 @@ Or install it yourself as:
 
 ```
 Usage: termin [options]
+    -a, --after=<date>               Trigger only on date later than given date
     -b, --before=<date>              Trigger only on date earlier than given date
     -c, --execute=<command>          Run given command with %{date} and %{link} replacements
     -s, --service=<id>               Id of the requested service
@@ -34,7 +35,7 @@ Usage: termin [options]
 
 Basically you can sit down, relax, brew some :coffee: and watch at output.
 
-    $ termin_de --before 2020-09-29
+    $ termin_de --before 2020-09-29 --after 2020-09-20
     $ I, [2020-09-01 20:24:52#30369]  INFO -- : Looking for available slots before 2020-09-29
     $ I, [2020-09-01 20:24:53#30369]  INFO -- : Nothing ...
     $ I, [2020-09-01 20:25:53#30369]  INFO -- : Looking for available slots before 2020-09-29

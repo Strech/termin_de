@@ -13,6 +13,10 @@ module TerminDe
       @service = service
     end
 
+    def within?(before:, after:)
+      (after..before).cover?(self.date)
+    end
+
     def to_h
       {link: @link, date: @date}
     end

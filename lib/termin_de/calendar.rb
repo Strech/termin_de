@@ -18,42 +18,45 @@ module TerminDe
     TERMIN_CSS_PATH = 'td.buchbar a'
     URL = 'https://service.berlin.de/terminvereinbarung/termin'
 
-    attr_reader :booked_termin, :options
+    attr_reader :options
 
     def initialize(options)
       @options = options
-      @booked_termin = Termin.new(
-        date: options.before_date,
-        service: options.service
-      )
     end
 
     def earlier?
-      !earlier_termin.link.nil? && earlier_termin.date != booked_termin.date
+      !!earlier_termin
     end
 
     def earlier_termin
-      @earlier_termin ||= (available_termins | [booked_termin]).min_by(&:date)
+      @earlier_termin ||= available_termins.min_by(&:date)
     end
 
     def available_termins
-      bookable_termins = download_latest_calendar.css(TERMIN_CSS_PATH)
-      bookable_termins.map do |link|
-        time = Time.at(link.attr(:href).match(/\d+/)[0].to_i)
-        Termin.new(
-          date: Date.parse(time.to_s),
-          link: url,
-          service: @booked_termin.service
-        )
-      end
+      download_latest_calendar
+        .css(TERMIN_CSS_PATH)
+        .map do |link|
+          time = Time.at(link.attr(:href).match(/\d+/)[0].to_i)
+          Termin.new(
+            date: Date.parse(time.to_s),
+            link: url,
+            service: @options.service
+          )
+        end
+        .filter do |termin|
+          termin.within?(
+            before: @options.before_date.prev_day,
+            after: @options.after_date.next_day
+          )
+        end
     end
 
     def url
       [
         URL + '/tag.php?termin=1',
         'dienstleisterlist=' + burgeramt_ids,
-        'anliegen[]=' + @booked_termin.service,
-        'herkunft=http%3A%2F%2Fservice.berlin.de%2Fdienstleistung%2F' + @booked_termin.service + '%2F'
+        'anliegen[]=' + @options.service,
+        'herkunft=http%3A%2F%2Fservice.berlin.de%2Fdienstleistung%2F' + @options.service + '%2F'
       ].join('&')
     end
 

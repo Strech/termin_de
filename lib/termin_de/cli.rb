@@ -6,7 +6,8 @@ require 'date'
 module TerminDe
   # command line interface
   class Cli
-    DEFAULT_DATE = Date.new(3000, 0o1, 0o1)
+    DEFAULT_BEFORE_DATE = Date.new(3000, 0o1, 0o1)
+    DEFAULT_AFTER_DATE = Date.new(1970, 0o1, 0o1)
     DEFAULT_DRY_RUN = false
     # default request for id card
     DEFAULT_SERVICE = '120703'
@@ -20,7 +21,13 @@ module TerminDe
 
     def initialize(argv)
       @argv = argv
-      @options = Options.new(DEFAULT_DATE, DEFAULT_DRY_RUN, DEFAULT_SERVICE, BURGERAMT_IDS)
+      @options = Options.new(
+        DEFAULT_BEFORE_DATE,
+        DEFAULT_AFTER_DATE,
+        DEFAULT_DRY_RUN,
+        DEFAULT_SERVICE,
+        BURGERAMT_IDS
+      )
     end
 
     def start
@@ -30,7 +37,7 @@ module TerminDe
 
     private
 
-    Options = Struct.new(:before_date, :dry_run, :service, :burgeramt, :command) do
+    Options = Struct.new(:before_date, :after_date, :dry_run, :service, :burgeramt, :command) do
       def command_given?
         !command.nil?
       end
@@ -43,11 +50,19 @@ module TerminDe
         parser.banner = "Burgeramt termin monitor\nUsage: termin [options]"
         parser.version = VERSION
 
+        parser.on('-a', '--after=<date>', String, 'Trigger only on date later than given date') do |date|
+          @options.after_date = begin
+                                  Date.parse(date)
+                                rescue StandardError
+                                  DEFAULT_AFTER_DATE
+                                end
+        end
+
         parser.on('-b', '--before=<date>', String, 'Trigger only on date earlier than given date') do |date|
           @options.before_date = begin
                                    Date.parse(date)
                                  rescue StandardError
-                                   DEFAULT_DATE
+                                   DEFAULT_BEFORE_DATE
                                  end
         end
 
