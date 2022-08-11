@@ -1,3 +1,8 @@
+# :warning: THIS PROJECT IS GOING TO BE REWRITTEN AND KICK SOME BURGERAMT'S ASSES ⚠️
+
+Please wait with any PR a little bit more 🙏
+
+
 # TerminDe
 
 Simple Termin cancelation monitoring for the Berliner offices :eyeglasses:
