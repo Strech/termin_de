@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module TerminDe
+
+  def self.logger
+    @@logger ||= Logger.new(STDOUT)
+  end
+
   # simple termin object to hold date, link and the service
   class Termin
     attr_reader :date

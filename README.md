@@ -9,31 +9,33 @@ Simple Termin cancelation monitoring for the Berliner offices :eyeglasses:
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install it directly from github:
 
-```ruby
-gem 'termin_de'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install termin_de
+    $ gem install specific_install
+    $ gem specific_install -l https://github.com/Strech/termin_de.git
 
 ## Usage
 
 ```
-Usage: termin [options]
+Burgeramt termin monitor. Version 0.1.0
+Usage: termin_de [options]
     -b, --before=<date>              Trigger only on date earlier than given date
     -c, --execute=<command>          Run given command with %{date} and %{link} replacements
     -s, --service=<id>               Id of the requested service
-    -u, --burgeramt=<id>             Id of the burgeramt
+    -u, --burgeramt=<bid>            Id of the burgeramt(s) (comma separated)
+    -i, --interval=<sec>             How long to wait between requests in seconds
         --dry-run                    Run on saved examples
+        --verbose                    Print more information during run
         --version                    Display the version
 ```
+
+By default `termin_de` will look for an appointment to get a Personalausweis (service=) in all Bürgerämtern.
+
+By default `termin_de` will find appointments for the current and next month (and not any further). If you are looking only appointments before an even shorter date then use `-b` and give the date in the format `YYYY-mm-dd`.
+
+To perform a different or more specific search, you need to look-up the service id of the service you want (see [https://service.berlin.de/dienstleistungen/]) and pass a list of Bürgerämtern which you want to search (see [https://service.berlin.de/standorte/buergeraemter/] for the Bürgerämter, or the complete list at [https://service.berlin.de/standorte/]).
+
+As an example of the `-c` switch, if you are running WSL under Windows you can a browser open automatically by using `-c "wslview '%{link}'"`.
 
 ## Examples
 
@@ -62,9 +64,19 @@ Use `--dry-run` option for local sandbox. Sample has 2 available dates `2015-11-
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Clone this repo locally: `git clone https://github.com/Strech/termin_de`
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `bin/setup` to install dependencies.
+
+Then, run `bundle exec rake spec` to run the tests.
+
+Run the local version of the code using `bundle exec bin/termin_de`
+
+You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
