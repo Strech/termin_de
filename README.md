@@ -23,6 +23,20 @@ Or install it yourself as:
 
     $ gem install termin_de
 
+## Using Docker
+
+If you have Docker installed, you can use this one-liner to run Simple Termin:
+
+```
+docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp ruby:2.7.3 bash -c 'bundle && bin/termin_de'
+```
+
+You can also provide command line parameters, e.g.:
+
+```
+docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp ruby:2.7.3 bash -c 'bundle && bin/termin_de --service=121151'
+```
+
 ## Usage
 
 ```
